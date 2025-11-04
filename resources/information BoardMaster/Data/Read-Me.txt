@@ -1,0 +1,142 @@
+
+E N G L I S H :
+
+
+This is the newest information regarding BoardMaster 5.0, which is not
+included in the manual:
+
+
+-- [Only for ProtoMat H60 and H100]
+   When updating from BoardMaster 5.0.207, Boardmaster shows message box about a new key
+   assignment because old version doesn't support key usage. Please proceed according the
+   instruction in C:\Program Files\LPKF52\BMaster\Docs\UpdateKey-e.pdf.
+
+-- By the use of an INI-File from BoardMaster 4.0 or older there is first no communication
+   possible. Press [Cance] button in BoardMaster's startup message box "Switch the machine on"
+   to launch BoardMaster in Offline mode. Then open the "Connect" dialog box from the "Configuration"
+   menu to choose the right settings accordung to page 56 from the BoardMaster 5.0 manual.
+
+-- Minimum screen resolution XGA (1024 x 768 pixel)
+
+-- During the installation of BoardMaster 4.0 a short cut icon to launch BoardMaster 
+   will be placed on the desktop. No more need to open the Start Menu.
+
+-- BoardMaster 5.0 includes new tool lists with new tool names. These lists
+   are not compatible with those of CircuitCAM 3.x. Use CircuitCAM 4.0 as well.
+
+-- BoardMaster 5.0 is able to remember the last used tool in case of using 
+   the ProtoMat 95s*. User can choose to keep the tool if quitting BoardMaster 
+   or to remove it back to the tool magazine.
+
+-- Only one list of the tool positions in the tool magazine for 95s* is used. This file
+   is named bm-95s*.tls and will be loaded and saved automatically. The former lists (*.TLS)
+   of Boardmaster 3.0 are not compatible. The definition of tool positions has to be done anew. 
+
+-- As used for the drill tools every mill tool may get their individual head 
+   down time. This is the time the plotter waits after tool down before starts 
+   the movement. This time is different for e.g. Universal Cutter and Contour Router.
+
+-- The life cycle of any tool of the same kind within the tool magazine, e.g. 
+   3 Universal Cutter are used, is calculated, updated and saved correctly now.
+
+-- BoardMaster 5.0 includes one new tool list for plastic machining. This tool
+   library is named plastics.tol .
+
+-- The color of the cap of the mill/drill spindle of the circuit board plotter
+   ProtoMat C30 and C30/S is either silver (e.g. C30/S - EC) or black (e.g. C30/S).
+   Please ensure that you choose the correct plotter type in the setup programm
+
+-- The reload dialog box: The two check boxes of the reload dialog box have wrong names in 
+   the BoardMaster manual: 
+   The "enable" check box is named "Switch On".
+   The "stretch" check box is named "Mofify".
+   Please note that when using the reload function.
+
+-- Dialog Box Tool Library: when loading a new tool library the displayed paths 
+   under file name and folder may differ. Under file name the path and name of the 
+   current library is shown, under folder the path, which was used before in different 
+   situation.
+
+-- ProtoMat 95s, H100: A new check box is inserted in the tool box dialog box. Mark the 
+   check box "Stop after tool change" and the plotter will stop after each tool change
+   of milling tools to allow the user to adjust the milling depth anew.
+
+-- Following test files have been installed into the data sub-directory:
+
+ 
+CheckHome.lmd : 	Test files for checking the HOME position of the Circuit Board Plotter.
+			Drill 1 hole in phase DrillingPlated, flip the base material, mill the
+  			corresponding circle around the hole in phase MillingTop.
+
+===========================================================================================================
+
+
+D E U T S C H :
+
+
+Dies sind die neuesten Informationen über BoardMaster 5.0, die nicht im Handbuch enthalten sind:
+
+
+
+-- [Nur für ProtoMat H60 and H100]
+   When ein Update von BoardMaster 5.0.207 durchgeführt wird, so erscheint beim ersten Start von
+   BoardMaster der Hinweis, dass der Maschine ein neuer Schlüsser zugewiesen werden muss, weil die
+   alte Version die Schlüsselverwaltung noch nicht unterstützt hatte. In diesem Fall gehen Sie
+   bitte gemäß der Anleitung in C:\Programe\LPKF52\BMaster\docs\UpdateKey-d.pdf.
+
+-- Bei Verwendung einer INI-Datei von BoardMaster 4.0 oder älter wird beim ersten Start von
+   BoardMaster kein Kommunikationsaufbau möglich sein. Drücken Sie deshalb bei der BoardMaster-
+   Meldung "Maschine einschalten" auf [Abbrechen], um BoardMaster im Offline-Modus zu starten.
+   Öffnen Sie jetzt die Dialogbox "Maschinen Kommunikation" unter Konfiguration -> Schnittstelle.
+   Wählen Sie hier alle Einstellungen wie auf Seite 56 des BaordMaster Handbuches beschrieben sind.
+
+-- Minimale Bildschirmauflösung XGA (1024 x 768 Bildpunkte)
+
+-- Während der Installation von BoardMaster 5.0 wird eine Schaltfläche auf dem
+   Desktop platziert, um BoardMaster zu starten. Der Aufruf über das Start-Menü
+   ist nicht mehr notwendig.
+
+-- BoardMaster 5.0 beinhaltet neue Werkzeuglisten mit neuen Werkzeugnamen. Diese
+   Listen sind nicht kompatibel zu denn von CircuitCAM 3.x. Benutzen Sie zusammen
+   mit der BoardMaster Version 4.0 auch die Version 4.0 von CircuitCAM.
+
+-- BoardMaster 5.0 ist in der Lage sich das zuletzt verwendete Werkzeug zu merken, 
+   wenn ein ProtoMat 95s* mit automatischem Werkzeugwechsel benutzt wird. Der Anwender 
+   kann beim Verlassen von BoardMaster entscheiden, ob das Werkzeug beibehalten oder 
+   in das Werkzeugmagazin abgelegt werden soll.
+
+-- Es wird nur noch eine Liste mit den Werkzeugpositionen im Werkzeugmagazin verwendet.
+   Diese Datei trägt den Namen bm-95s*.tls und wird automatisch geladen und gespeichert.
+   Die Werkzeugpositions Listen (*.TLS) der BoardMaster Version 3.0 sind nicht kompatibel.
+   Die Werkzeugpositionen müssen neu definiert werden. 
+
+-- Wie schon für die Bohrwerkzeuge kann nun auch den Fräswerkzeugen eine individuelle
+   Kopfabsenkzeit zugewiesen werden. Dieses ist die Zeit, die der Plotter nach einem 
+   Werkzeug-Absenken-Befehl wartet bevor sich der Kopf in Bewegung setzt. Diese Zeit 
+   ist z.B. unterschiedlich für Universal-Fräser und für Konturen-Fräser.
+
+-- Die Standzeiten jedes einzelnen Werkzeuges des gleichen Typs im Werkzeugmagazin,
+   z.B. 3 Universal-Fräser werden im Magazin benutzt, werden berechnet und gespeichert.
+
+-- BoardMaster 5.0 beinhaltet eine neue Werkzeugliste zum Bearbeiten von Kunststoffen.
+   der Name dieser Werkzeugbibliotek ist plastics.tol .
+
+-- Die Farbe der Kappe der Fräsbohr-Spindel der ProtMat C30 und C30/S ist entweder
+   Silber (silver, z.B. C30/S - EC) oder Schwarz (black, z.B. C30/S). 
+   Vergewissern Sie sich, dass Sie den richtigen Plottertypen im Setup gewählt haben.
+
+-- Dialog Box Werkzeugbibliothek: Beim Laden einer neuen Werkzeugbibliothek 
+   können die Pfadanzeigen von Dateiname und Order unterschiedlich sein. 
+   Unter Dateiname wird der Pfad und der Name der aktuellen Bibliothek angezeigt,
+   unter Order der Pfad, der zuletzt an evtl. anderer Stelle benutzt wurde.
+
+-- ProtoMat 95s, H100: in die Werkzeugmagazin Dialog Box wird eine neue Check Box eingefügt.
+   durch Markieren von "Stopp nach WzgWechsel" kann der Plotter nach jedem Wechsel eines 
+   Fräswerkzeugs gestoppt werden, um die Frästiefe neu zu justieren.
+
+-- Folgende Testdaten wurden in das Daten Verzeichnis installiert:
+
+CheckHome.lmd : 	Testdaten zum Überprüfen der HOME Position des Fräsbohrplotters.     
+			In Phase DrillingPlated 1 Bohrung bohren, Basismaterial wenden, in 
+			Phase MillingTop Kreis um diese Bohrung herum fräsen.
+
