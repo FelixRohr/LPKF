@@ -3,6 +3,7 @@ from tkinter import ttk, scrolledtext, messagebox
 import serial
 import serial.tools.list_ports
 import threading
+import re
 
 class PlotterController(tk.Tk):
     PROMPT = "> "
@@ -18,8 +19,8 @@ class PlotterController(tk.Tk):
         self.current_position = [0, 0, 0]  # [x, y, z] in µm für Emulation oder letzten bekannten Wert
         self.pen_down = False
         self.motor_enabled = False
-        self.workspace_x = 200000  # 200mm in µm, Default
-        self.workspace_y = 150000  # 150mm in µm, Default
+        self.workspace_x = 45000  # 450mm in µm, Default
+        self.workspace_y = 22000  # 220mm in µm, Default
 
         self.set_dark_mode()
         self.create_widgets()
@@ -102,7 +103,7 @@ class PlotterController(tk.Tk):
         # Kreuz-Layout für Richtungstasten
         def move(dx, dy):
             mm = self.move_dist_var.get()
-            um = mm * 1000
+            um = mm * 100
             self.move_relative_checked(dx*um, dy*um)
 
         btn_up = ttk.Button(move_frame, text="↑", width=3, command=lambda: move(0, 1))
@@ -130,18 +131,18 @@ class PlotterController(tk.Tk):
         abs_y_entry.grid(row=1, column=1, padx=2, pady=2)
 
         def move_abs_x():
-            x_um = self.abs_x_var.get() * 1000
+            x_um = self.abs_x_var.get() * 100
             y_um = self.current_position[1]
             self.move_absolute_checked(x_um, y_um)
 
         def move_abs_y():
             x_um = self.current_position[0]
-            y_um = self.abs_y_var.get() * 1000
+            y_um = self.abs_y_var.get() * 100
             self.move_absolute_checked(x_um, y_um)
 
         def move_abs_xy():
-            x_um = self.abs_x_var.get() * 1000
-            y_um = self.abs_y_var.get() * 1000
+            x_um = self.abs_x_var.get() * 100
+            y_um = self.abs_y_var.get() * 100
             self.move_absolute_checked(x_um, y_um)
 
         ttk.Button(abs_frame, text="Move X", command=move_abs_x).grid(row=2, column=0, padx=2, pady=2)
@@ -163,8 +164,8 @@ class PlotterController(tk.Tk):
         ws_y_entry.grid(row=0, column=3, padx=2, pady=2)
 
         def set_workspace():
-            self.workspace_x = self.ws_x_var.get() * 1000
-            self.workspace_y = self.ws_y_var.get() * 1000
+            self.workspace_x = self.ws_x_var.get() * 100
+            self.workspace_y = self.ws_y_var.get() * 100
             self.update_plot()
         ttk.Button(ws_frame, text="Set", command=set_workspace).grid(row=0, column=4, padx=5, pady=2)
 
@@ -205,6 +206,7 @@ class PlotterController(tk.Tk):
         ttk.Button(cmd_frame, text="Enable Motor (!EM1;)", command=lambda: self.send_command("!EM1;")).grid(row=0, column=3, padx=5, pady=2)
         ttk.Button(cmd_frame, text="Disable Motor (!EM0;)", command=lambda: self.send_command("!EM0;")).grid(row=0, column=4, padx=5, pady=2)
         ttk.Button(cmd_frame, text="Query Position (!ON0;)", command=lambda: self.send_command("!ON0;")).grid(row=0, column=5, padx=5, pady=2)
+        # ttk.Button(cmd_frame, text="Query Position (!ON0;)", command=lambda: self.query_and_update_position()).grid(row=0, column=5, padx=5, pady=2)
 
         # Command Flow Frame
         flow_frame = ttk.LabelFrame(self, text="Command Flow Example")
@@ -278,11 +280,22 @@ class PlotterController(tk.Tk):
             self.log_terminal("Emulation mode disabled.\n")
 
     def read_serial(self):
+        # Robust reader that accumulates fragments and extracts full coordinate triplets.
+        pat_p = re.compile(r'P\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)')
+        pat_coords = re.compile(r'(?<!\d)(-?\d+),\s*(-?\d+),\s*(-?\d+)(?!\d)')
         while not self.stop_thread and self.serial_port and self.serial_port.is_open:
             try:
                 data = self.serial_port.readline()
                 if data:
                     self.log_terminal(f"Received: {data.decode(errors='replace')}")
+                    if data.startswith(b"P"):
+                        try:
+                            coords = data[1:].split(b"C")[0].split(b",")
+                            self.current_position = [int(coords[0]), int(coords[1]), int(coords[2])]
+                            print(f"Updated position: X={self.current_position[0]} Y={self.current_position[1]} Z={self.current_position[2]}")
+                            self.update_plot()
+                        except Exception:
+                            pass
             except Exception:
                 pass
 
@@ -341,6 +354,7 @@ class PlotterController(tk.Tk):
                 self.motor_enabled = False
                 self.update_plot()
             if update_position:
+                pass
                 self.after(200, self.query_and_update_position)
         except Exception as e:
             messagebox.showerror("Send Error", str(e))
@@ -358,6 +372,7 @@ class PlotterController(tk.Tk):
                 try:
                     coords = data[1:].split("C")[0].split(",")
                     self.current_position = [int(coords[0]), int(coords[1]), int(coords[2])]
+                    print(f"Updated position: X={self.current_position[0]} Y={self.current_position[1]} Z={self.current_position[2]}")
                     self.update_plot()
                 except Exception:
                     pass

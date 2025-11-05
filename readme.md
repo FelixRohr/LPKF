@@ -21,57 +21,66 @@ It is a proof-of-concept and not fully tested. Use with caution.
 ### Features
 
 - **Serial Connection:** Select and configure the serial port (baudrate, parity, stop bits, flow control).
-- **Emulation Mode:** Test all commands and GUI features without hardware. Simulates position and head state.
+- **Emulation Mode:** Test commands and GUI features without hardware. Emulation simulates position and head state.
 - **Command Terminal:** Send arbitrary commands and view sent/received data in a terminal-like window.
 - **Quick Commands:** Buttons for initialization, pen up/down, motor enable/disable, and position query.
-- **Relative Movement:** Move the head in X/Y directions by a configurable step size (mm) using arrow buttons.
+- **Relative Movement:** Move the head in X/Y by a configurable step size (mm) using arrow buttons.
 - **Absolute Movement:** Move to a specific X and/or Y position (mm) using input fields and buttons.
 - **Workspace Limit:** Set the maximum X and Y workspace (mm) to prevent out-of-bounds movement.
-- **Visualization:** See a live plot of the workspace and the current head position. The marker color indicates:
+- **Visualization:** A live plot of the workspace and the current head position. The marker color indicates:
   - **Green:** Pen up
   - **Orange:** Pen down
   - **Red:** Motor enabled
 - **Command Flow:** Enter and execute a sequence of commands as a single flow.
 - **Automatic Safety:** Prevents movement into negative or out-of-bounds workspace.
 - **Automatic Disconnect:** Serial port is closed automatically when the application exits.
+- **Serial parsing (current):** The application reads incoming serial lines and attempts to parse position replies that start with the letter `P` followed by `X,Y,Z`. Parsing is based on readline-style input; fragmented replies (pieces arriving across multiple reads) may not be parsed correctly—see Known Limitations below.
 
 ### Usage
 
-1. **Install Requirements:**Install Python 3 and the `pyserial` package:
+1. **Install Requirements:** Install Python 3 (3.8+) and the `pyserial` package:
 
-   ```bash
-   pip install pyserial
-   ```bash
+```powershell
+pip install pyserial
+```
+
 2. **Start the Application:**
 
-   ```bash
-   python controller.py
-   ```bash
+```powershell
+python controller.py
+```
+
 3. **Connect to the Machine:**
 
-   - Select the correct COM port and settings.
-   - Click "Connect" to open the serial connection.
-   - Use "Emulation Mode" to test without hardware.
+- Select the correct COM port and settings.
+- Click "Connect" to open the serial connection.
+- Use "Emulation Mode" to test without hardware.
+
 4. **Move the Head:**
 
-   - Use the arrow buttons for relative moves.
-   - Enter absolute positions and use the corresponding buttons.
-   - Set workspace limits to match your machine.
+- Use the arrow buttons for relative moves.
+- Enter absolute positions and use the corresponding buttons.
+- Set workspace limits to match your machine.
+
 5. **Send Commands:**
 
-   - Use the input field below the terminal to send custom commands.
-   - Use the command buttons for common actions.
+- Use the input field below the terminal to send custom commands.
+- Use the command buttons for common actions.
+
 6. **Monitor State:**
 
-   - The terminal shows all sent and received data.
-   - The workspace plot shows the current position and head state.
+- The terminal shows all sent and received data.
+- The workspace plot shows the current position and head state (when a full `P` reply is received).
 
 ### Known Limitations
 
 - Not all error cases are handled gracefully.
-- No support for loading/saving command sequences or settings yet.
+- The serial parser expects a complete line starting with `P` for position replies; fragmented replies may not be parsed and therefore the GUI might not show the current position.
+- No persistent configuration storage (settings are not saved between runs).
 - Some features (e.g., spindle control) are not implemented.
 - Only basic commands are supported.
+
+If you need more robust parsing (assembly of fragmented replies), that can be implemented: the codebase can be extended with an RX buffer/accumulator that collects fragments and extracts coordinate triplets once complete. Open an issue or request and this can be added.
 
 ---
 
